@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>获取服务器更新数据</p>
+	<div id="demo"></div>
+	<script>
+		if (typeof(EventSource) != "undefined") {
+			var source = new EventSource('demo_sse.php');
+			source.onmessage = function(event){
+				document.getElementById('demo').innerHTML += event.data +'<br>';
+			}
+		} else {
+			document.getElementById("demo").innerHTML="你的浏览器不支持 server-sent 事件";
+		}
+	</script>
+</body>
+</html>

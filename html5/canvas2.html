@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="mycanvas" width="200" height="200" style="border: solid 1px red;">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+	<script>
+		var mycanvas = document.getElementById('mycanvas');
+		var ctx = mycanvas.getContext('2d');
+
+		var grd = ctx.createRadialGradient(75,50,5,90,60,100);
+		grd.addColorStop(0,'red');
+		grd.addColorStop(1,'white');
+
+		ctx.fillStyle = grd;
+		ctx.fillRect(10,10,150,80);
+	</script>
+</body>
+</html>

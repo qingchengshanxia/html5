@@ -1,0 +1,16 @@
+CACHE MANIFEST
+#v 1.0.0
+#尤其要注意的是，要在web服务器端配置MIME-type:'text/cache-manifest'
+
+CACHE:
+#需要缓存的列表
+style.css
+img.jpg
+
+NETWORK:
+# 不需要缓存的
+*
+
+FALLBACK:
+# 访问缓存失败后，备用的资源，第一个是访问源，第二个是替换文件
+*.html /404.html

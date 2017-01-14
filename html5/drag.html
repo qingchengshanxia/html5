@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			width:200px;
+			height: 200px;
+			margin: 50px;
+			border:solid 1px red;
+		}
+		img {
+			width: 50px;
+			height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<img src="img.jpg" alt="" draggable="true" id="img" />
+	</div>
+	<div id="div2"></div>
+	<script>
+		var img,id,dragimg,data,allowDrop,drag,drop;
+
+		allowDrop = function(ev){
+			ev.preventDefault();
+		};
+
+		drag = function(ev){
+			ev.dataTransfer.setData('Text',ev.target.id);
+		};
+
+		drop = function(ev){
+			ev.preventDefault();
+			data = ev.dataTransfer.getData('Text');
+			ev.target.appendChild(document.getElementById(data));
+		};
+
+		img = document.getElementById('img');
+		img.ondragstart = function(){
+			drag(event);
+		}
+
+		dragimg = function(id){
+			id = document.querySelector(id);
+			id.addEventListener('drop',function(){
+				drop(event);
+			},false);
+			id.addEventListener('dragover',function(){
+				allowDrop(event);
+			})
+		};
+
+		dragimg('#div1');
+		dragimg('#div2');
+	</script>
+</body>
+</html>

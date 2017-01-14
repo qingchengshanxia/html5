@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>计数： <output id="result"></output></p>
+	<button onclick="startWorker()">start</button>
+	<button onclick="stopWorker()">stop</button>
+	<p>IE9及以下不支持</p>
+	<script>
+		var w;
+		function startWorker(){
+			if (typeof(Worker !=="undefined")) {
+				if (typeof(w) == "undefined") {
+					w = new Worker('self.importScripts("http://localhost/workers.js")');
+				}
+				w.onmessage = function(event){
+					document.querySelector('#result').innerHTML = event.data;
+				};
+			} else {
+				document.querySelector('#result').innerHTML = "你的浏览器不支持 Web Workers...";
+			}
+		}
+
+		function stopWorker(){
+			w.terminate();
+			w= undefined;
+		}
+	</script>
+</body>
+</html>

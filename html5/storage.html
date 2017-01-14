@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		label {
+			width: 60px;
+			display: inline-block;
+		}
+		form {
+			line-height: 2;
+		}
+	</style>
+</head>
+<body>
+	<form action="htj.php" method="get">
+		<label for="name">name:</label>
+		<input type="text" id="name" /><br>
+		<label for="sex">sex:</label>
+		<input type="text" id="sex" /><br>
+		<input type="button" value="新增" id="pull1" /><br>
+		<input type="button" id="info" value="提示！">
+		<hr>
+		<label for="search">search:</label>
+		<input type="search" id="search" /><br>
+		<input type="button" id="pull2" value="查找" />
+	</form>
+	<p id="result"></p>
+	<hr>
+	<div id="demo"></div>
+	<script>
+		function save(){
+			var k = document.getElementById('name').value;
+			var v = document.getElementById('sex').value;
+			if (k && v) {
+				localStorage.setItem(k, v);
+				show();
+				document.getElementById('info').value = '添加成功！';
+			}
+		}
+		document.getElementById('pull1').onclick = function(){
+			save();
+		}
+
+		function find(){
+			var sname = document.getElementById('search').value;
+			var rname = localStorage.getItem(sname);
+			if (rname) {
+				document.getElementById('result').innerHTML = sname + '的性别是：' + rname;
+			} else {
+				document.getElementById('result').innerHTML = '您查找的性别是：空' ;
+			}
+		}
+		document.getElementById('pull2').onclick = function(){
+			find();
+		}
+
+		function show(){
+			var list = document.getElementById('demo');
+			if (localStorage.length >0 ) {
+				var re = "<table border='1' id='data'>";
+				re += "<tr><td>姓名</td><td>性别</td><td>删除数据</td></tr>";
+				for (var i = 0, len = localStorage.length; i < len ; i++) {
+					var n = localStorage.key(i);
+					var val = localStorage.getItem(n);
+					re += "<tr><td>" + n +"</td><td>" + val + "</td><td>del</td></tr>";
+				}
+				re += "</table>";
+				list.innerHTML = re;
+				del();
+			} else {
+				list.innerHTML = "暂无记录！";
+			}
+		};
+		show();
+
+		function del(){
+			var data = document.getElementById('data');
+			data.onclick = function(event){
+				var e = event||window.event;
+				var target = e.target||e.srcElement;
+				if (target.innerHTML=='del') {
+					var na = target.parentNode.firstChild.innerHTML;
+					localStorage.removeItem(na);
+					target.parentNode.parentNode.removeChild(target.parentNode);
+				} 
+			}
+		}
+	</script>
+</body>
+</html>
